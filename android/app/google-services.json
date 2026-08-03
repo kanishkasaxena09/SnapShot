@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "293505801812",
+    "project_id": "snapshots-f63e5",
+    "storage_bucket": "snapshots-f63e5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:293505801812:android:1b9edd72295878ccf457c1",
+        "android_client_info": {
+          "package_name": "com.snapshot.snapshot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "293505801812-87rau8mp15rh844uvu0o3auuj6dtm5kk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPAAJxG58hw8mpFeyfxBopDIbXWih0nX4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "293505801812-87rau8mp15rh844uvu0o3auuj6dtm5kk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
