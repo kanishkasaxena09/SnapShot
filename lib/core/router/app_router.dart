@@ -2,22 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../features/auth/domain/entities/auth_state.dart';
-import '../../features/auth/presentation/providers/auth_provider.dart';
-import '../../features/auth/providers/auth_provider.dart' as supabase_auth;
-import '../../features/auth/presentation/screens/connect_github_screen.dart';
-import '../../features/auth/presentation/screens/career_goal_screen.dart';
-import '../../features/auth/presentation/screens/experience_level_screen.dart';
-import '../../features/auth/presentation/screens/forgot_password_screen.dart';
-import '../../features/auth/presentation/screens/interest_selection_screen.dart';
-import '../../features/auth/presentation/screens/login_screen.dart';
-import '../../features/auth/presentation/screens/onboarding_screen.dart';
-import '../../features/auth/presentation/screens/otp_verification_screen.dart';
-import '../../features/auth/presentation/screens/profile_setup_screen.dart';
-import '../../features/auth/presentation/screens/register_screen.dart';
-import '../../features/auth/presentation/screens/splash_screen.dart';
-import '../../features/auth/presentation/screens/technology_selection_screen.dart';
-import '../../features/auth/presentation/screens/upload_resume_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/explore/presentation/screens/explore_screen.dart';
 import '../../features/explore/presentation/screens/explore_category_detail_screen.dart';
@@ -74,122 +58,12 @@ import 'route_names.dart';
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
 final GlobalKey<NavigatorState> _shellNavigatorKey = GlobalKey<NavigatorState>();
 
-/// Routes guests may visit without a session. Every other route requires an
-/// authenticated Supabase session.
-const _guestRoutes = <String>{
-  RouteNames.login,
-  RouteNames.register,
-  RouteNames.forgotPassword,
-  RouteNames.otpVerification,
-};
-
-class _AuthRefreshNotifier extends ChangeNotifier {
-  _AuthRefreshNotifier(this._ref);
-
-  final Ref _ref;
-  AuthState get authState => _ref.read(authProvider);
-
-  void refresh() => notifyListeners();
-}
-
 final routerProvider = Provider<GoRouter>((ref) {
-  final refreshNotifier = _AuthRefreshNotifier(ref);
-
-  ref.listen(
-    supabase_auth.authStateProvider,
-    (previous, next) => refreshNotifier.refresh(),
-  );
-
   return GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RouteNames.splash,
+    initialLocation: RouteNames.home,
     debugLogDiagnostics: true,
-    refreshListenable: refreshNotifier,
-    redirect: (context, state) {
-      final authState = ref.read(supabase_auth.authStateProvider).value;
-      // Session still resolving (cold start / session restore): hold on the
-      // splash instead of flashing a wrong destination.
-      if (authState == null) return null;
-
-      final location = state.uri.path;
-      // Splash is the launch gate: route once the session has resolved.
-      if (location == RouteNames.splash) {
-        return authState.session != null
-            ? RouteNames.home
-            : RouteNames.login;
-      }
-
-      final isAuthenticated = authState.session != null;
-      final isGuestRoute = _guestRoutes.contains(location);
-
-      if (isAuthenticated && isGuestRoute) return RouteNames.home;
-      if (!isAuthenticated && !isGuestRoute) return RouteNames.login;
-      return null;
-    },
     routes: [
-      // --- Splash ---
-      GoRoute(
-        path: RouteNames.splash,
-        builder: (context, state) => const SplashScreen(),
-      ),
-
-      // --- Auth Routes ---
-      GoRoute(
-        path: RouteNames.login,
-        builder: (context, state) => const LoginScreen(),
-      ),
-      GoRoute(
-        path: RouteNames.register,
-        builder: (context, state) => const RegisterScreen(),
-      ),
-      GoRoute(
-        path: RouteNames.forgotPassword,
-        builder: (context, state) => const ForgotPasswordScreen(),
-      ),
-      GoRoute(
-        path: RouteNames.otpVerification,
-        builder: (context, state) {
-          final email = state.uri.queryParameters['email'] ?? '';
-          return OtpVerificationScreen(email: email);
-        },
-      ),
-
-      // --- Onboarding ---
-      GoRoute(
-        path: RouteNames.onboarding,
-        builder: (context, state) => const OnboardingScreen(),
-      ),
-
-      // --- Onboarding Steps ---
-      GoRoute(
-        path: RouteNames.profileSetup,
-        builder: (context, state) => const ProfileSetupScreen(),
-      ),
-      GoRoute(
-        path: RouteNames.interestSelection,
-        builder: (context, state) => const InterestSelectionScreen(),
-      ),
-      GoRoute(
-        path: RouteNames.technologySelection,
-        builder: (context, state) => const TechnologySelectionScreen(),
-      ),
-      GoRoute(
-        path: RouteNames.careerGoal,
-        builder: (context, state) => const CareerGoalScreen(),
-      ),
-      GoRoute(
-        path: RouteNames.experienceLevel,
-        builder: (context, state) => const ExperienceLevelScreen(),
-      ),
-      GoRoute(
-        path: RouteNames.connectGithub,
-        builder: (context, state) => const ConnectGithubScreen(),
-      ),
-      GoRoute(
-        path: RouteNames.uploadResume,
-        builder: (context, state) => const UploadResumeScreen(),
-      ),
-
       // --- Shell Route (Bottom Nav) ---
       ShellRoute(
         navigatorKey: _shellNavigatorKey,

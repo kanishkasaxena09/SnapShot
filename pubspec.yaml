@@ -19,9 +19,6 @@ dependencies:
   # Routing
   go_router: ^16.0.0
 
-  # Backend
-  supabase_flutter: ^2.9.1
-
   # Networking
   dio: ^5.9.0
   connectivity_plus: ^6.1.3

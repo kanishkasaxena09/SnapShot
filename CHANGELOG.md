@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 #### Onboarding & Authentication
-- Multi-step onboarding flow with profile setup (experience level, career goals, interests, technology selection, GitHub connection, resume upload)
+- Multi-step onboarding flow with profile setup (experience level, career goals,interests, technology selection, GitHub connection, resume upload)
 - Email/password authentication with OTP verification
 - Google sign-in integration
 - Password reset flow

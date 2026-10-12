@@ -8,8 +8,6 @@ class Env {
     required this.firebaseApiKey,
     required this.firebaseProjectId,
     required this.openAIApiKey,
-    required this.supabaseUrl,
-    required this.supabaseAnonKey,
     required this.enableLogging,
     required this.enableAnalytics,
   });
@@ -18,8 +16,6 @@ class Env {
   final String firebaseApiKey;
   final String firebaseProjectId;
   final String openAIApiKey;
-  final String supabaseUrl;
-  final String supabaseAnonKey;
   final bool enableLogging;
   final bool enableAnalytics;
 
@@ -44,8 +40,6 @@ class Env {
     firebaseApiKey: 'DEV_FIREBASE_API_KEY',
     firebaseProjectId: 'snapshot-dev',
     openAIApiKey: 'DEV_OPENAI_API_KEY',
-    supabaseUrl: 'https://jlcsikgonlnfwwlcufex.supabase.co',
-    supabaseAnonKey: 'sb_publishable_HZzU1ZnRCGPgBlnQe5lQkg_YNnzuU78',
     enableLogging: true,
     enableAnalytics: false,
   );
@@ -56,8 +50,6 @@ class Env {
     firebaseApiKey: 'STAGING_FIREBASE_API_KEY',
     firebaseProjectId: 'snapshot-staging',
     openAIApiKey: 'STAGING_OPENAI_API_KEY',
-    supabaseUrl: 'https://staging.supabase.co',
-    supabaseAnonKey: 'STAGING_SUPABASE_ANON_KEY',
     enableLogging: true,
     enableAnalytics: false,
   );
@@ -68,8 +60,6 @@ class Env {
     firebaseApiKey: 'PROD_FIREBASE_API_KEY',
     firebaseProjectId: 'snapshot-prod',
     openAIApiKey: 'PROD_OPENAI_API_KEY',
-    supabaseUrl: 'https://prod.supabase.co',
-    supabaseAnonKey: 'PROD_SUPABASE_ANON_KEY',
     enableLogging: false,
     enableAnalytics: true,
   );
